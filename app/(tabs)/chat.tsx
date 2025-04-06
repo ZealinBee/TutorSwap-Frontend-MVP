@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { Colors } from "@/constants/Colors";
+import ChatItem from "@/components/ChatItem";
 
 const mockChats = [
   {
@@ -32,36 +33,6 @@ export default function Chat() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
 
-  const renderChatItem = ({ item }) => (
-    <TouchableOpacity style={styles.chatContainer}>
-      <Image
-        source={{ uri: item.avatar }}
-        style={{ width: 50, height: 50, borderRadius: 25 }}
-      />
-      <View style={styles.chatInfoContainer}>
-        <View>
-          <Text style={[styles.userName, {
-            color: theme.primary
-          }]}>{item.name}</Text>
-          <Text
-            style={[
-                styles.lastMessage,
-                {
-                    color: theme.text,
-                }
-            ]}
-          >{item.lastMessage}</Text>
-        </View>
-        <Text style={[
-            styles.timestamp,
-            {
-                color: theme.text,
-            },
-        ]}>{item.timestamp}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-
   return (
     <>
       <View style={styles.container}>
@@ -77,7 +48,11 @@ export default function Chat() {
         </Text>
         <FlatList
           data={mockChats}
-          renderItem={renderChatItem}
+          renderItem={(item) => (
+            <ChatItem
+              item={item.item}
+            ></ChatItem>
+          )}
           keyExtractor={(item) => item.id}
         ></FlatList>
       </View>
@@ -99,7 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 10,
     paddingTop: 5,
-    flex:1,
+    flex: 1,
     justifyContent: "space-between",
   },
   title: {
@@ -110,12 +85,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
   },
-  lastMessage: {
-
+  lastMessage: {},
+  timestamp: {
+    fontSize: 12,
+    marginLeft: "auto",
+    marginRight: 0,
   },
-    timestamp: {
-        fontSize: 12,
-        marginLeft: "auto",
-        marginRight: 0
-    },
 });
