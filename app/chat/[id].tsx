@@ -1,4 +1,3 @@
-import { Colors } from "@/constants/Colors";
 import {
   FlatList,
   Pressable,
@@ -8,32 +7,17 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-
-import Message from "@/components/Message";
 import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-const mockMessages = [
-  {
-    id: "1",
-    sender: "user",
-    text: "Hello, how are you?",
-    timestamp: "2023-10-01T10:00:00Z",
-  },
-  {
-    id: "2",
-    sender: "other",
-    text: "I am good, thanks! How about you?",
-    timestamp: "2023-10-01T10:01:00Z",
-  },
-  {
-    id: "3",
-    sender: "user",
-    text: "I am doing well, thank you!",
-    timestamp: "2023-10-01T10:02:00Z",
-  },
-];
+import MessageBubble from "@/components/MessageBubble";
+import { Colors } from "@/constants/Colors";
+
+import shouldDateAppear from "@/utils/shouldDateAppear";
+import DateSeparator from "@/components/DateSeparator";
+import formatMessageDate from "@/utils/formatMessageDate";
+import mockMessages from "@/mocks/mockMessages";
 
 export default function ChatDetails() {
   const colorScheme = useColorScheme();
@@ -42,6 +26,11 @@ export default function ChatDetails() {
 
   const [messages, setMessages] = useState(mockMessages);
   const [newMessage, setNewMessage] = useState("");
+  const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const sendMessageHandler = () => {
     if (newMessage.trim().length === 0) return;
@@ -57,23 +46,35 @@ export default function ChatDetails() {
     setNewMessage("");
   };
 
+  const scrollToBottom = () => {
+    if (flatListRef.current && messages.length > 0) {
+      flatListRef.current.scrollToEnd({ animated: true });
+    }
+  };
+
   return (
     <View
       style={{
         backgroundColor: theme.background,
         flex: 1,
-        paddingTop: 40
+        paddingTop: 40,
       }}
     >
       <FlatList
+        ref={flatListRef}
         data={messages}
-        renderItem={({ item }) => (
-          <Message
-            text={item.text}
-            id={item.id}
-            sender={item.sender}
-            timestamp={item.timestamp}
-          ></Message>
+        renderItem={({ item, index }) => (
+          <>
+            {shouldDateAppear(index, messages) && (
+              <DateSeparator date={formatMessageDate(item.timestamp)} />
+            )}
+            <MessageBubble
+              text={item.text}
+              id={item.id}
+              sender={item.sender}
+              timestamp={item.timestamp}
+            ></MessageBubble>
+          </>
         )}
         keyExtractor={(item) => item.id.toString()}
       ></FlatList>
@@ -111,6 +112,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   sendButton: {
-    marginRight:15,
+    marginRight: 15,
   },
 });

@@ -22,7 +22,7 @@ export const Colors = {
   dark: {
     text: '#fff',
     primary: '#C5F4E0',
-    secondary: '#C2EABA',
+    secondary: '#A7C4A0',
     background: '#151718',
     tint: tintColorDark,
     icon: '#9BA1A6',
