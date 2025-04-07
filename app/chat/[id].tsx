@@ -11,13 +11,14 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-import MessageBubble from "@/components/MessageBubble";
+import MessageBubble from "@/components/chat/MessageBubble";
 import { Colors } from "@/constants/Colors";
 
 import shouldDateAppear from "@/utils/shouldDateAppear";
-import DateSeparator from "@/components/DateSeparator";
+import DateSeparator from "@/components/chat/DateSeparator";
 import formatMessageDate from "@/utils/formatMessageDate";
 import mockMessages from "@/mocks/mockMessages";
+import ProfileTopBar from "@/components/chat/ProfileTopBar";
 
 export default function ChatDetails() {
   const colorScheme = useColorScheme();
@@ -31,6 +32,12 @@ export default function ChatDetails() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToBottom();
+    }, 0);
+  }, []);
 
   const sendMessageHandler = () => {
     if (newMessage.trim().length === 0) return;
@@ -57,9 +64,9 @@ export default function ChatDetails() {
       style={{
         backgroundColor: theme.background,
         flex: 1,
-        paddingTop: 40,
       }}
     >
+      <ProfileTopBar></ProfileTopBar>
       <FlatList
         ref={flatListRef}
         data={messages}

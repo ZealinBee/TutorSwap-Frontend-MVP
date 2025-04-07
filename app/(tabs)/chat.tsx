@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { Colors } from "@/constants/Colors";
-import ChatItem from "@/components/ChatItem";
+import ChatItem from "@/components/chat/ChatItem";
 
 const mockChats = [
   {
@@ -26,6 +26,20 @@ const mockChats = [
     timestamp: "Yesterday",
     avatar: "https://i.pravatar.cc/150?img=2",
   },
+  {
+    id: "3",
+    name: "Alice Johnson",
+    lastMessage: "Let's catch up soon!",
+    timestamp: "2 days ago",
+    avatar: "https://i.pravatar.cc/150?img=3",
+  },
+  {
+    id: "4",
+    name: "Bob Brown",
+    lastMessage: "Can you send me the report?",
+    timestamp: "Last week",
+    avatar: "https://i.pravatar.cc/150?img=4",
+  }
   // Add more mock chats as needed
 ];
 
