@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from "react-native";
@@ -25,21 +26,22 @@ export default function ProfileTopBar() {
             style={styles.arrow}
           />
         </Pressable>
-
-        <Image
-          source={{ uri: "https://i.pravatar.cc/150?img=1" }}
-          style={{ width: 40, height: 40, borderRadius: 25 }}
-        />
-        <Text
-          style={[
-            styles.name,
-            {
-              color: theme.text,
-            },
-          ]}
-        >
-          Jeff Bezos
-        </Text>
+        <TouchableOpacity style={styles.profileContainer}>
+          <Image
+            source={{ uri: "https://i.pravatar.cc/150?img=1" }}
+            style={{ width: 40, height: 40, borderRadius: 25 }}
+          />
+          <Text
+            style={[
+              styles.name,
+              {
+                color: theme.text,
+              },
+            ]}
+          >
+            Jeff Bezos
+          </Text>
+        </TouchableOpacity>
       </View>
     </>
   );
@@ -52,6 +54,10 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 10,
     paddingLeft: 20,
+  },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   name: {
     fontSize: 16,

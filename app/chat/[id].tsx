@@ -70,6 +70,7 @@ export default function ChatDetails() {
       <FlatList
         ref={flatListRef}
         data={messages}
+        style={{marginBottom:15}}
         renderItem={({ item, index }) => (
           <>
             {shouldDateAppear(index, messages) && (
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 30,
+    paddingVertical: 20,
   },
   input: {
     flex: 1,
