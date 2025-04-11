@@ -12,6 +12,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { Colors } from "@/constants/Colors";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 function OnboardingScreenBasicInfo() {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ function OnboardingScreenBasicInfo() {
 
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -49,9 +51,7 @@ function OnboardingScreenBasicInfo() {
   };
 
   return (
-    <div>
-      {/* <View>some top bar</View> */}
-
+    <>
       <View style={styles.container}>
         <Text style={styles.header}>Let's set up your profile</Text>
         <View style={styles.profileImageContainer}>
@@ -96,7 +96,7 @@ function OnboardingScreenBasicInfo() {
           ></TextInput>
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/onboardingScreenTeachLearn")}>
           <Text
             style={[
               styles.button,
@@ -111,7 +111,7 @@ function OnboardingScreenBasicInfo() {
           </Text>
         </TouchableOpacity>
       </View>
-    </div>
+      </>
   );
 }
 
