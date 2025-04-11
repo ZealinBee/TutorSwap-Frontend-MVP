@@ -39,7 +39,7 @@ export default function HomeScreen() {
         <View style={{ flex: 1 }}></View>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: theme.secondary }]}
-          onPress={() => router.replace("/(tabs)/chat")}
+          onPress={() => router.replace("/onboardingScreenBasicInfo")}
         >
           <View style={styles.buttonContent}>
             <AntDesign name="google" size={24} color="white" />
