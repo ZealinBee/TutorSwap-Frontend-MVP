@@ -15,31 +15,44 @@ export default function TabsLayout() {
           height: 65,
           paddingTop: 10,
           paddingBottom: 5,
-        }
+        },
       }}
     >
-      <Tabs.Screen name="chat"
+      <Tabs.Screen
+        name="chat"
         options={{
           title: "Chat",
           tabBarIcon: ({ color }) => (
-            <AntDesign
-              name="message1"
-              size={22}
-              color={color}
-            />
-          )
+            <AntDesign name="message1" size={22} color={color} />
+          ),
         }}
       />
-      <Tabs.Screen name="profile"
+      <Tabs.Screen
+        name="connect"
+        options={{
+          title: "Connect",
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="link" size={22} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="schedule"
+        options={{
+          title: "Schedule",
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="calendar" size={22} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => (
-            <AntDesign
-              name="user"
-              size={22}
-              color={color}
-            />
-          )
+            <AntDesign name="user" size={22} color={color} />
+          ),
         }}
       />
     </Tabs>
