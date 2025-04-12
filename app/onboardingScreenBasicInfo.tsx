@@ -52,29 +52,33 @@ function OnboardingScreenBasicInfo() {
 
   return (
     <>
-      <View style={styles.container}>
-        <Text style={styles.header}>Let's set up your profile</Text>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <Text style={[styles.header, {color: theme.text}]}>Let's set up your profile</Text>
         <View style={styles.profileImageContainer}>
           <TouchableOpacity onPress={pickImage}>
             {image ? (
               <View>
                 <Image source={{ uri: image }} style={styles.profileImage} />
-                <View style={styles.editIconContainer}>
+                <View style={[styles.editIconContainer, { borderColor: theme.text }]}>
                   <MaterialIcons name="edit" size={16} color={theme.text} />
                 </View>
               </View>
             ) : (
-              <View style={styles.profileImagePlaceholder}>
-                <FontAwesome name="user" size={50} color={theme.text} />
-                <View style={styles.editIconContainer}>
-                  <MaterialIcons name="edit" size={16} color={theme.text} />
+              <View style={[styles.profileImagePlaceholder, { backgroundColor: theme.gray }]}>
+                <FontAwesome name="user" size={50} color={theme.text}  />
+                <View style={[styles.editIconContainer, { borderColor: theme.text }]}>
+                  <MaterialIcons
+                    name="edit"
+                    size={16}
+                    color={theme.text}
+                  />
                 </View>
               </View>
             )}
           </TouchableOpacity>
         </View>
         <View>
-          <Text style={styles.label}>Your Full Name</Text>
+          <Text style={[styles.label, {color: theme.text}]}>Your Full Name</Text>
           <TextInput
             placeholder="John Doe"
             value={name}
@@ -83,8 +87,8 @@ function OnboardingScreenBasicInfo() {
             placeholderTextColor="#888"
           ></TextInput>
         </View>
-        <View>
-          <Text style={styles.label}>A Short Description About You</Text>
+        <View style={{ marginTop: 10 }}>
+          <Text style={[styles.label, {color: theme.text}]}>A Short Description About You</Text>
           <TextInput
             placeholder="Tell us about yourself"
             value={description}
@@ -96,7 +100,10 @@ function OnboardingScreenBasicInfo() {
           ></TextInput>
         </View>
 
-        <TouchableOpacity onPress={() => router.push("/onboardingScreenTeachLearn")}>
+        <TouchableOpacity
+          onPress={() => router.push("/onboardingScreenTeachLearn")}
+          style={{marginTop: 20}}
+        >
           <Text
             style={[
               styles.button,
@@ -111,7 +118,7 @@ function OnboardingScreenBasicInfo() {
           </Text>
         </TouchableOpacity>
       </View>
-      </>
+    </>
   );
 }
 
@@ -153,6 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 350,
     marginBottom: 5,
+    fontSize: 16,
     textAlign: "center",
   },
   profileImageContainer: {
@@ -170,16 +178,14 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "#f0f0f0",
     borderWidth: 2,
-    borderColor: "#ddd",
     justifyContent: "center",
     alignItems: "center",
   },
   editIconContainer: {
     position: "absolute",
     bottom: 0,
-    right: 0,
+    right: -10,
     width: 32,
     height: 32,
     borderRadius: 16,

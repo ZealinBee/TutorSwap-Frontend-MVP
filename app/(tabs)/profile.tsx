@@ -17,7 +17,7 @@ export default function Profile() {
   const theme = Colors[colorScheme ?? "light"];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <ProfileTopContainer ownProfile={true} />
       <DetailsContainer />
     </View>

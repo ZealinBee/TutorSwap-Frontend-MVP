@@ -12,21 +12,24 @@ import {
 } from "react-native";
 
 function DetailsContainer() {
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
+
   return (
     <View>
-      <Text style={styles.username}>Jeff Bezos</Text>
-      <Text>
+      <Text style={[styles.username, { color: theme.text }]}>Jeff Bezos</Text>
+      <Text style={{ color: theme.text }}>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore,
         perferendis quis? Quod soluta nulla ullam quisquam voluptates, officiis
         dolores sequi cumque, necessitatibus accusantium, molestias magnam?
       </Text>
-      <View>
-        <Text style={styles.skillHeader}>Want to Learn:</Text>
-        <Text>Languages: Spanish</Text>
+      <View >
+        <Text style={[styles.skillHeader, {color: theme.text}]}>Want to Learn:</Text>
+        <Text style={{color: theme.text}}>Languages: Spanish</Text>
       </View>
       <View>
-        <Text style={styles.skillHeader}>Want to Teach:</Text>
-        <Text>Mathematics: Algebra</Text>
+        <Text style={[styles.skillHeader, {color: theme.text}]}>Want to Teach:</Text>
+        <Text style={{color: theme.text}}>Mathematics: Algebra</Text>
       </View>
     </View>
   );

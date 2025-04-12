@@ -36,8 +36,15 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
               },
             ]}
           >
-            <MaterialIcons name="edit" size={18} color={theme.textInverse} />
-            <Text style={{ color: theme.textInverse }}>Edit Profile</Text>
+            <Text style={{ color: theme.text, marginLeft: 5 }}>
+              Edit Profile
+            </Text>
+            <MaterialIcons
+              name="edit"
+              size={18}
+              color={theme.text}
+              style={{ marginLeft: 5 }}
+            />
           </TouchableOpacity>
         ) : (
           <>
@@ -53,8 +60,13 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
                 setModalVisible(true);
               }}
             >
-              <MaterialIcons name="link" size={18} color={theme.textInverse} />
-              <Text style={{ color: theme.textInverse }}>Connect to Teach</Text>
+              <MaterialIcons
+                name="link"
+                size={18}
+                color={theme.text}
+                style={{ marginRight: 5, paddingTop: 2 }}
+              />
+              <Text style={{ color: theme.text }}>Connect to Teach</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -68,8 +80,13 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
                 setModalVisible(true);
               }}
             >
-              <MaterialIcons name="link" size={18} color={theme.textInverse} />
-              <Text style={{ color: theme.textInverse }}>Connect to Learn</Text>
+              <MaterialIcons
+                name="link"
+                size={18}
+                color={theme.text}
+                style={{ marginRight: 5, paddingTop: 2 }}
+              />
+              <Text style={{ color: theme.text }}>Connect to Learn</Text>
             </TouchableOpacity>
             <ConnectModal
               visible={modalVisible}
@@ -108,6 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     marginVertical: 5,
+    justifyContent: "center",
   },
   buttonContainer: {
     justifyContent: "center",

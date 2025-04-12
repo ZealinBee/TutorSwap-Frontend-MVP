@@ -21,7 +21,7 @@ export const Colors = {
   },
   dark: {
     text: '#fff',
-    primary: '#C5F4E0',
+    primary: '#705685',
     secondary: '#A7C4A0',
     background: '#151718',
     tint: tintColorDark,

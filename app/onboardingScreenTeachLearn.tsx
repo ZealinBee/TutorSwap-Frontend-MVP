@@ -21,9 +21,18 @@ function OnboardingScreenTeachLearn() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>What do you want to learn?</Text>
-      <View>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text
+        style={[
+          styles.label,
+          {
+            color: theme.text,
+          },
+        ]}
+      >
+        What do you want to learn?
+      </Text>
+      <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedToLearn}
           onValueChange={(itemValue) => setSelectedToLearn(itemValue)}
@@ -40,16 +49,18 @@ function OnboardingScreenTeachLearn() {
           })}
         </Picker>
       </View>
-      <Text style={styles.label}>
-        You can be more specific with what you want to learn
+      <Text style={[styles.label, { color: theme.text }]}>
+        Let's be more specific with what you want to learn
       </Text>
       <TextInput
         placeholder="E.g. JavaScript, Spanish"
         style={styles.skillInput}
       ></TextInput>
 
-      <Text style={styles.label}>What do you want to teach?</Text>
-      <View>
+      <Text style={[styles.label, { color: theme.text }]}>
+        What do you want to teach?
+      </Text>
+      <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedToTeach}
           onValueChange={(itemValue) => setSelectedToTeach(itemValue)}
@@ -66,8 +77,8 @@ function OnboardingScreenTeachLearn() {
           })}
         </Picker>
       </View>
-      <Text style={styles.label}>
-        You can be more specific with what you want to teach
+      <Text style={[styles.label, { color: theme.text }]}>
+      Let's be more specific with what you want to learn
       </Text>
       <TextInput
         placeholder="E.g. JavaScript, Spanish"
@@ -96,11 +107,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
   label: {
     fontSize: 16,
     fontWeight: "500",
+    marginTop: 10,
     marginBottom: 5,
   },
   button: {
@@ -109,7 +120,8 @@ const styles = StyleSheet.create({
     width: 350,
     marginBottom: 5,
     textAlign: "center",
-    marginTop:20,
+    marginTop: 20,
+    fontSize: 16,
   },
   skillInput: {
     padding: 10,
@@ -120,10 +132,15 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: 350,
+    height: 50,
+    margin: 0,
+    padding: 0,
+    transform: [{ translateY: -3 }], // This will help center the text vertically
+  },
+  pickerContainer: {
     borderRadius: 8,
     backgroundColor: "#fff",
-    marginBottom: 12,
-    padding: 10,
+    overflow: "hidden",
   },
 });
 

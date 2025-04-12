@@ -29,8 +29,8 @@ function UserCard(user: UserCardProps) {
     <View style={styles.container}>
       <Image source={{ uri: user.profilePicture }} style={styles.image} />
       <View style={styles.rightContainer}>
-        <Text style={styles.name}>{user.name}</Text>
-        <Text>
+        <Text style={[styles.name, {color:theme.text}]}>{user.name}</Text>
+        <Text style={{ color: theme.text }}>
           Wants to {user.isLearn ? "Learn" : "Teach"} {user.wantToX}
         </Text>
         <TouchableOpacity
@@ -40,7 +40,7 @@ function UserCard(user: UserCardProps) {
             params: { id: user.id },
           })}
         >
-          <Text>View More</Text>
+          <Text style={{color: theme.text}}>View Details</Text>
         </TouchableOpacity>
       </View>
     </View>
