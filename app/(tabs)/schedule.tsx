@@ -1,8 +1,9 @@
 import React from 'react'
+import { View } from 'react-native'
 
 function schedule() {
   return (
-    <div>schedule</div>
+    <View></View>
   )
 }
 
