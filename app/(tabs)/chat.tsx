@@ -39,7 +39,7 @@ const mockChats = [
     lastMessage: "Can you send me the report?",
     timestamp: "Last week",
     avatar: "https://i.pravatar.cc/150?img=4",
-  }
+  },
   // Add more mock chats as needed
 ];
 
@@ -60,13 +60,10 @@ export default function Chat() {
         >
           Chats
         </Text>
+
         <FlatList
           data={mockChats}
-          renderItem={(item) => (
-            <ChatItem
-              item={item.item}
-            ></ChatItem>
-          )}
+          renderItem={(item) => <ChatItem item={item.item}></ChatItem>}
           keyExtractor={(item) => item.id}
         ></FlatList>
       </View>

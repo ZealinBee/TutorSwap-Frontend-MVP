@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import {
   Image,
@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { Colors } from "@/constants/Colors";
+import ConnectModal from "./ConnectModal";
 
 interface ProfileTopContainerProps {
   ownProfile: boolean;
@@ -16,6 +17,8 @@ interface ProfileTopContainerProps {
 function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
+  const [modalVisible, setModalVisible] = useState(false);
+  const [connectType, setConnectType] = useState<"teach" | "learn">("teach");
 
   return (
     <View style={styles.topContainer}>
@@ -45,6 +48,10 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
                   backgroundColor: theme.secondary,
                 },
               ]}
+              onPress={() => {
+                setConnectType("teach");
+                setModalVisible(true);
+              }}
             >
               <MaterialIcons name="link" size={18} color={theme.textInverse} />
               <Text style={{ color: theme.textInverse }}>Connect to Teach</Text>
@@ -56,10 +63,23 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
                   backgroundColor: theme.primary,
                 },
               ]}
+              onPress={() => {
+                setConnectType("learn");
+                setModalVisible(true);
+              }}
             >
               <MaterialIcons name="link" size={18} color={theme.textInverse} />
               <Text style={{ color: theme.textInverse }}>Connect to Learn</Text>
             </TouchableOpacity>
+            <ConnectModal
+              visible={modalVisible}
+              onClose={() => setModalVisible(false)}
+              onSubmit={(message) => {
+                console.log(message);
+                setModalVisible(false);
+              }}
+              type={connectType}
+            ></ConnectModal>
           </>
         )}
       </View>
