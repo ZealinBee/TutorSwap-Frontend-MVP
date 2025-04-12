@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 interface UserCardProps {
   id: string;
@@ -23,6 +24,7 @@ interface UserCardProps {
 function UserCard(user: UserCardProps) {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme || "light"];
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Image source={{ uri: user.profilePicture }} style={styles.image} />
@@ -33,6 +35,10 @@ function UserCard(user: UserCardProps) {
         </Text>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: theme.secondary }]}
+          onPress={() => router.push({
+            pathname: "/profile/[id]",
+            params: { id: user.id },
+          })}
         >
           <Text>View More</Text>
         </TouchableOpacity>

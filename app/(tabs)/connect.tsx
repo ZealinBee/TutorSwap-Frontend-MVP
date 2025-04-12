@@ -1,3 +1,4 @@
+import Search from "@/components/connect/Search";
 import ToLearnView from "@/components/connect/ToLearnView";
 import ToTeachView from "@/components/connect/ToTeachView";
 import { Colors } from "@/constants/Colors";
@@ -13,11 +14,16 @@ import {
 function Connect() {
   const [mode, setMode] = useState<"learn" | "teach">("learn");
 
+  const [searchStatus, setSearchStatus] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme || "light"];
 
   return (
     <View style={styles.container}>
+      <Search />
       <View
         style={[styles.toggleContainer, { backgroundColor: theme.background }]}
       >
