@@ -40,8 +40,8 @@ function ConnectModal({ visible, onClose, onSubmit, type }: ConnectModalProps) {
               styles.messageInput,
               { color: theme.text, borderColor: theme.gray },
             ]}
-            placeholder="Hi! I want to learn xyz..."
-            placeholderTextColor={theme.text}
+            placeholder={`Hi! I would like to ${type} C# ${type === "teach" ? "to you" : "with you"}`}
+            placeholderTextColor={"#888"}
             multiline
             value={message}
             onChangeText={setMessage}

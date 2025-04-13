@@ -22,7 +22,7 @@ function Connect() {
   const theme = Colors[colorScheme || "light"];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Search />
       <View
         style={[styles.toggleContainer, { backgroundColor: theme.background }]}

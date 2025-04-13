@@ -43,13 +43,13 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
               router.push("/editProfile");
             }}
           >
-            <Text style={{ color: theme.text, marginLeft: 5 }}>
+            <Text style={{ color: theme.whiteAllAround, marginLeft: 5 }}>
               Edit Profile
             </Text>
             <MaterialIcons
               name="edit"
               size={18}
-              color={theme.text}
+              color={theme.whiteAllAround}
               style={{ marginLeft: 5 }}
             />
           </TouchableOpacity>
@@ -70,10 +70,10 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
               <MaterialIcons
                 name="link"
                 size={18}
-                color={theme.text}
+                color={theme.whiteAllAround}
                 style={{ marginRight: 5, paddingTop: 2 }}
               />
-              <Text style={{ color: theme.text }}>Connect to Teach</Text>
+              <Text style={{ color: theme.whiteAllAround }}>Connect to Teach</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -90,10 +90,10 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
               <MaterialIcons
                 name="link"
                 size={18}
-                color={theme.text}
+                color={theme.whiteAllAround}
                 style={{ marginRight: 5, paddingTop: 2 }}
               />
-              <Text style={{ color: theme.text }}>Connect to Learn</Text>
+              <Text style={{ color: theme.whiteAllAround }}>Connect to Learn</Text>
             </TouchableOpacity>
             <ConnectModal
               visible={modalVisible}

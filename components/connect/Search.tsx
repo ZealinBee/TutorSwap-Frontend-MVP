@@ -32,6 +32,7 @@ function Search() {
         value={searchQuery}
         onChangeText={setSearchQuery}
         style={styles.input}
+        placeholderTextColor={"#888"}
       />
       <TouchableOpacity style={styles.searchButton} >
         <AntDesign name="search1" size={24} color={theme.primary} />

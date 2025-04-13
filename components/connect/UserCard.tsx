@@ -30,7 +30,7 @@ function UserCard(user: UserCardProps) {
       <Image source={{ uri: user.profilePicture }} style={styles.image} />
       <View style={styles.rightContainer}>
         <Text style={[styles.name, {color:theme.text}]}>{user.name}</Text>
-        <Text style={{ color: theme.text }}>
+        <Text style={{ color: theme.text}}>
           Wants to {user.isLearn ? "Learn" : "Teach"} {user.wantToX}
         </Text>
         <TouchableOpacity
@@ -40,7 +40,7 @@ function UserCard(user: UserCardProps) {
             params: { id: user.id },
           })}
         >
-          <Text style={{color: theme.text}}>View Details</Text>
+          <Text style={{color: theme.whiteAllAround, fontSize: 12}}>View Details</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     borderRadius: 55,
   },
   name: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     marginTop: 10,
   },
@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     alignSelf: "flex-start",
+    width: "100%",
+    alignItems: "center",
   },
 });
 

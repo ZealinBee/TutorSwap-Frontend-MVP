@@ -17,10 +17,11 @@ export const Colors = {
     tabIconDefault: '#C5F4E0',
     tabIconSelected: tintColorLight,
     gray: '#F1EBED',
-    textInverse: '#fff',
+    textInverse: '#FAF9F6',
+    whiteAllAround: '#FAF9F6',
   },
   dark: {
-    text: '#fff',
+    text: '#FAF9F6',
     primary: '#705685',
     secondary: '#A7C4A0',
     background: '#151718',
@@ -30,5 +31,6 @@ export const Colors = {
     tabIconSelected: tintColorDark,
     gray: '#8F8389',
     textInverse: '#151718',
+    whiteAllAround: '#FAF9F6',
   },
 };
