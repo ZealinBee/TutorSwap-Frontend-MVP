@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import ConnectModal from "./ConnectModal";
+import { useRouter } from "expo-router";
 
 interface ProfileTopContainerProps {
   ownProfile: boolean;
@@ -17,8 +18,11 @@ interface ProfileTopContainerProps {
 function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
+  const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [connectType, setConnectType] = useState<"teach" | "learn">("teach");
+
+
 
   return (
     <View style={styles.topContainer}>
@@ -35,6 +39,9 @@ function ProfileTopContainer({ ownProfile }: ProfileTopContainerProps) {
                 backgroundColor: theme.secondary,
               },
             ]}
+            onPress={() => {
+              router.push("/editProfile");
+            }}
           >
             <Text style={{ color: theme.text, marginLeft: 5 }}>
               Edit Profile

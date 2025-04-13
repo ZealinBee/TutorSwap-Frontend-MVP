@@ -38,6 +38,7 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="onboardingScreenBasicInfo" />
         <Stack.Screen name="onboardingScreenTeachLearn" />
+        <Stack.Screen name="editProfile" />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
