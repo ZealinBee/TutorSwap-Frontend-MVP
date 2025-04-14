@@ -26,7 +26,7 @@ export default function ProfileTopBar() {
             style={styles.arrow}
           />
         </Pressable>
-        <TouchableOpacity style={styles.profileContainer}>
+        <TouchableOpacity style={styles.profileContainer} onPress={() => router.push("/profile/[id]")}>
           <Image
             source={{ uri: "https://i.pravatar.cc/150?img=1" }}
             style={{ width: 40, height: 40, borderRadius: 25 }}

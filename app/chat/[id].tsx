@@ -23,7 +23,6 @@ import ProfileTopBar from "@/components/chat/ProfileTopBar";
 export default function ChatDetails() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? "light"];
-  const { id } = useLocalSearchParams();
 
   const [messages, setMessages] = useState(mockMessages);
   const [newMessage, setNewMessage] = useState("");
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 20,
   },
   input: {
     flex: 1,

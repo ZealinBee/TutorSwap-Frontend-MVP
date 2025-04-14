@@ -24,7 +24,7 @@ export default function ChatItem({item} : {item: ChatItemProps}) {
     >
       <Image
         source={{ uri: item.avatar }}
-        style={{ width: 50, height: 50, borderRadius: 25 }}
+        style={{ width: 70, height: 70, borderRadius: 50 }}
       />
       <View style={styles.chatInfoContainer}>
         <View>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   userName: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "bold",
   },
   lastMessage: {},

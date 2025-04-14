@@ -1,6 +1,5 @@
 import React from "react";
 
-import mockUsers from "@/mocks/mockUsers";
 import {
   Image,
   StyleSheet,
@@ -9,7 +8,6 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 
