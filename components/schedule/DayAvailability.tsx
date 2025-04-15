@@ -11,12 +11,15 @@ import {
   View,
   ViewBase,
 } from "react-native";
+import AddAvailabilityModal from "./AddAvailabilityModal";
 
 interface DayAvailabilityProps {
   startTime: string;
   endTime: string;
   editMode: boolean;
   onDelete: () => void;
+  onNewTime: (startTime: string, endTime: string, dayOfTheWeek: string) => void;
+  dayOfTheWeek: string;
 }
 
 function DayAvailability({
@@ -24,36 +27,54 @@ function DayAvailability({
   endTime,
   editMode,
   onDelete,
+  onNewTime,
+  dayOfTheWeek,
 }: DayAvailabilityProps) {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme || "light"];
 
   const [startTimeInput, setStartTimeInput] = useState(startTime);
   const [endTimeInput, setEndTimeInput] = useState(endTime);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       {editMode ? (
-        <View style={styles.timing}>
-          <TextInput
-            value={startTimeInput}
-            onChangeText={setStartTimeInput}
-            style={styles.timeInput}
-          ></TextInput>
-          <Text style={styles.time}>-</Text>
+        <>
+          <View style={styles.timing}>
+            <TextInput
+              value={startTimeInput}
+              onChangeText={setStartTimeInput}
+              style={styles.timeInput}
+            ></TextInput>
+            <Text style={styles.time}>-</Text>
 
-          <TextInput
-            value={endTimeInput}
-            onChangeText={setEndTimeInput}
-            style={styles.timeInput}
-          ></TextInput>
-          <TouchableOpacity style={styles.icon} onPress={onDelete}>
-            <AntDesign name="delete" size={20} color={theme.text} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <AntDesign name="plus" size={20} color={theme.text} />
-          </TouchableOpacity>
-        </View>
+            <TextInput
+              value={endTimeInput}
+              onChangeText={setEndTimeInput}
+              style={styles.timeInput}
+            ></TextInput>
+            <TouchableOpacity style={styles.icon} onPress={onDelete}>
+              <AntDesign name="delete" size={20} color={theme.text} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => setIsModalOpen(true)}
+            >
+              <AntDesign name="plus" size={20} color={theme.text} />
+            </TouchableOpacity>
+          </View>
+          {isModalOpen && (
+            <AddAvailabilityModal
+              visible={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onConfirm={(startTime, endTime) => {
+                onNewTime(startTime, endTime, dayOfTheWeek);
+                setIsModalOpen(false);
+              }}
+            />
+          )}
+        </>
       ) : (
         <View style={styles.timing}>
           <Text style={styles.time}>{startTime}</Text>
@@ -91,7 +112,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
-  }
+  },
 });
 
 export default DayAvailability;

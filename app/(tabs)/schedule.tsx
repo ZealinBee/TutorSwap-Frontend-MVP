@@ -16,6 +16,7 @@ import mockReservationPreference from "@/mocks/mockReservationPreference";
 import { AntDesign } from "@expo/vector-icons";
 
 import { AvailableTime } from "../types/schedule/AvailableTime";
+import groupAvailabilityByDayOfTheWeek from "@/utils/groupAvailabilityByDayOfTheWeek";
 
 interface DayGroup {
   day: string;
@@ -29,50 +30,39 @@ function schedule() {
   const [mode, setMode] = useState<"availability" | "meetings">("availability");
   const [editMode, setEditMode] = useState(false);
 
+  const [availableTimes, setAvailableTimes] = useState(
+    [] as AvailableTime[]
+  );
   const [groupedAvailability, setGroupedAvailability] = useState(
     [] as DayGroup[]
   );
 
   const removeAvailability = (timeslot : AvailableTime) => {
-    const updatedAvailability = groupedAvailability.map((group) => {
-      if (group.day === timeslot.dayOfTheWeek) {
-        return {
-          ...group,
-          availableTimes: group.availableTimes.filter(
-            (time) => time.id !== timeslot.id
-          ),
-        };
-      }
-      return group;
+    const updatedAvailableTimes = availableTimes.filter(availableTime => {
+      return availableTime.id !== timeslot.id;
     })
-    setGroupedAvailability(updatedAvailability);
+    setAvailableTimes(updatedAvailableTimes);
+    setGroupedAvailability(groupAvailabilityByDayOfTheWeek(updatedAvailableTimes));
+  }
+
+  const addAvailability = (startTime: string, endTime: string, dayOfTheWeek: string) => {
+    const newAvailability = {
+      id: `${startTime}-${endTime}`,
+      dayOfTheWeek,
+      startTime,
+      endTime,
+    } as AvailableTime;
+
+    availableTimes.push(newAvailability);
+    setGroupedAvailability(groupAvailabilityByDayOfTheWeek(availableTimes));
   }
 
   useEffect(() => {
-    const groupedAvailabilityByDayOfTheWeek = () => {
-      const grouped = [
-        { day: "Sunday", availableTimes: [] as AvailableTime[] },
-        { day: "Monday", availableTimes: [] as AvailableTime[] },
-        { day: "Tuesday", availableTimes: [] as AvailableTime[] },
-        { day: "Wednesday", availableTimes: [] as AvailableTime[] },
-        { day: "Thursday", availableTimes: [] as AvailableTime[] },
-        { day: "Friday", availableTimes: [] as AvailableTime[] },
-        { day: "Saturday", availableTimes: [] as AvailableTime[] },
-      ];
-
-      mockAvailableTimes.forEach((availableTime) => {
-        const index = grouped.findIndex(
-          (group) => group.day === availableTime.dayOfTheWeek
-        );
-        if (index !== -1) {
-          grouped[index].availableTimes.push(availableTime);
-        }
-      });
-      // doing ts ignore here because lazy rn
-      // @ts-ignore
-      setGroupedAvailability(grouped);
+    const init = () => {
+      setAvailableTimes(mockAvailableTimes);
+      setGroupedAvailability(groupAvailabilityByDayOfTheWeek(mockAvailableTimes));
     };
-    groupedAvailabilityByDayOfTheWeek();
+    init();
   }, []);
 
   return (
@@ -119,8 +109,12 @@ function schedule() {
                     <DayAvailability
                       startTime={timeslot.startTime}
                       endTime={timeslot.endTime}
+                      dayOfTheWeek={timeslot.dayOfTheWeek}
                       editMode={editMode}
                       onDelete={() => removeAvailability(timeslot)}
+                      onNewTime={(startTime, endTime, dayOfTheWeek) =>
+                        addAvailability(startTime, endTime, dayOfTheWeek)
+                      }
                     />
                   )}
                 ></FlatList>
