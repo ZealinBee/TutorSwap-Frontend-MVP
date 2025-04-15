@@ -19,9 +19,9 @@ const mockAvailableTimes = [
   },
   {
     id: "3",
-    dayOfTheWeek: "Tuesday",
-    startTime: "09:00",
-    endTime: "17:00",
+    dayOfTheWeek: "Monday",
+    startTime: "19:00",
+    endTime: "21:00",
   },
   {
     id: "4",

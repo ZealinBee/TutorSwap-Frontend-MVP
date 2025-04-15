@@ -3,13 +3,11 @@ import React from "react";
 import { StyleSheet, Text, useColorScheme, View, ViewBase } from "react-native";
 
 interface DayAvailabilityProps {
-  dayOfTheWeek: string;
   startTime: string;
   endTime: string;
 }
 
 function DayAvailability({
-  dayOfTheWeek,
   startTime,
   endTime,
 }: DayAvailabilityProps) {
@@ -17,20 +15,10 @@ function DayAvailability({
   const theme = Colors[colorScheme || "light"];
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[
-          { color: theme.whiteAllAround, backgroundColor: theme.primary },
-          styles.dayIcon,
-        ]}
-      >
-        {dayOfTheWeek[0]}
-      </Text>
       <View style={styles.timing}>
-        <Text>{startTime}</Text>
-        <Text>-</Text>
-        <Text>{endTime}</Text>
-      </View>
+        <Text style={styles.time}>{startTime}</Text>
+        <Text style={styles.time}>-</Text>
+        <Text style={styles.time}>{endTime}</Text>
     </View>
   );
 }
@@ -42,21 +30,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 5,
   },
-  dayIcon: {
-    padding: 10,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    textAlign: "center",
-    aspectRatio: 1,
-    fontWeight: "bold",
-  },
   timing: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    fontSize: 20,
     marginVertical: 5,
   },
+  time: {
+    fontSize: 20,
+  }
 });
 
 export default DayAvailability;
