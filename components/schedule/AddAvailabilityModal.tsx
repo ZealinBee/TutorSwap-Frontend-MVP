@@ -1,3 +1,6 @@
+import { AvailableTime } from "@/types/schedule/AvailableTime";
+import isTimeOverlapping from "@/utils/isTimeOverlapping";
+import isTimeRangeValid from "@/utils/isTimeRangeValid";
 import React, { useState } from "react";
 import {
   View,
@@ -12,12 +15,16 @@ interface AddAvailabilityModalProps {
   visible: boolean;
   onClose: () => void;
   onConfirm: (startTime: string, endTime: string) => void;
+  availableTimes: AvailableTime[];
+  dayOfTheWeek: string;
 }
 
 function AddAvailabilityModal({
   visible,
   onClose,
   onConfirm,
+  availableTimes,
+  dayOfTheWeek,
 }: AddAvailabilityModalProps) {
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("17:00");
@@ -50,6 +57,18 @@ function AddAvailabilityModal({
       setEndTime(time);
     }
   };
+
+  const submitTimeSelection = () => {
+    if(!isTimeRangeValid(startTime, endTime)) {
+      alert("Invalid time range selected. Please select a valid range.");
+      return;
+    }
+    if(isTimeOverlapping(availableTimes, startTime, endTime, dayOfTheWeek)) {
+      alert("Selected time overlaps with existing availability.");
+      return;
+    }
+    onConfirm(startTime, endTime);
+  }
 
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>
@@ -107,7 +126,7 @@ function AddAvailabilityModal({
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.confirmButton]}
-              onPress={() => onConfirm(startTime, endTime)}
+              onPress={() => submitTimeSelection()}
             >
               <Text style={styles.buttonText}>Use these times</Text>
             </TouchableOpacity>

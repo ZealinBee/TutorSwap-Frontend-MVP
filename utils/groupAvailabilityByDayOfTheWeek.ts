@@ -1,4 +1,4 @@
-import { AvailableTime } from "@/app/types/schedule/AvailableTime";
+import { AvailableTime } from "@/types/schedule/AvailableTime";
 
 const groupAvailabilityByDayOfTheWeek = (availableTimes: AvailableTime[]) => {
     const grouped = [

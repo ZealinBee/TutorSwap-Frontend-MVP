@@ -15,8 +15,9 @@ import DayAvailability from "@/components/schedule/DayAvailability";
 import mockReservationPreference from "@/mocks/mockReservationPreference";
 import { AntDesign } from "@expo/vector-icons";
 
-import { AvailableTime } from "../types/schedule/AvailableTime";
+import { AvailableTime } from "../../types/schedule/AvailableTime";
 import groupAvailabilityByDayOfTheWeek from "@/utils/groupAvailabilityByDayOfTheWeek";
+import AddAvailabilityModal from "@/components/schedule/AddAvailabilityModal";
 
 interface DayGroup {
   day: string;
@@ -29,25 +30,31 @@ function schedule() {
 
   const [mode, setMode] = useState<"availability" | "meetings">("availability");
   const [editMode, setEditMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDay, setSelectedDay] = useState("");
 
-  const [availableTimes, setAvailableTimes] = useState(
-    [] as AvailableTime[]
-  );
+  const [availableTimes, setAvailableTimes] = useState([] as AvailableTime[]);
   const [groupedAvailability, setGroupedAvailability] = useState(
     [] as DayGroup[]
   );
 
-  const removeAvailability = (timeslot : AvailableTime) => {
-    const updatedAvailableTimes = availableTimes.filter(availableTime => {
+  const removeAvailability = (timeslot: AvailableTime) => {
+    const updatedAvailableTimes = availableTimes.filter((availableTime) => {
       return availableTime.id !== timeslot.id;
-    })
+    });
     setAvailableTimes(updatedAvailableTimes);
-    setGroupedAvailability(groupAvailabilityByDayOfTheWeek(updatedAvailableTimes));
-  }
+    setGroupedAvailability(
+      groupAvailabilityByDayOfTheWeek(updatedAvailableTimes)
+    );
+  };
 
-  const addAvailability = (startTime: string, endTime: string, dayOfTheWeek: string) => {
+  const addAvailability = (
+    startTime: string,
+    endTime: string,
+    dayOfTheWeek: string
+  ) => {
     const newAvailability = {
-      id: `${startTime}-${endTime}`,
+      id: `${startTime}-${endTime} ${Math.random()}`,
       dayOfTheWeek,
       startTime,
       endTime,
@@ -55,12 +62,14 @@ function schedule() {
 
     availableTimes.push(newAvailability);
     setGroupedAvailability(groupAvailabilityByDayOfTheWeek(availableTimes));
-  }
+  };
 
   useEffect(() => {
     const init = () => {
       setAvailableTimes(mockAvailableTimes);
-      setGroupedAvailability(groupAvailabilityByDayOfTheWeek(mockAvailableTimes));
+      setGroupedAvailability(
+        groupAvailabilityByDayOfTheWeek(mockAvailableTimes)
+      );
     };
     init();
   }, []);
@@ -96,16 +105,25 @@ function schedule() {
                     {item.availableTimes.length === 0 && "Not Available"}
                   </Text>
                   {editMode && item.availableTimes.length === 0 && (
-                    <TouchableOpacity>
-                      <AntDesign name="plus" size={20} color={theme.text} style={styles.icon} />
+                    <TouchableOpacity
+                      onPress={() => {
+                        setIsModalOpen(true);
+                        setSelectedDay(item.day);
+                      }}
+                    >
+                      <AntDesign
+                        name="plus"
+                        size={20}
+                        color={theme.text}
+                        style={styles.icon}
+                      />
                     </TouchableOpacity>
                   )}
                 </View>
-
                 <FlatList
                   data={item.availableTimes}
                   keyExtractor={(item) => item.id}
-                  renderItem={({ item : timeslot }) => (
+                  renderItem={({ item: timeslot }) => (
                     <DayAvailability
                       startTime={timeslot.startTime}
                       endTime={timeslot.endTime}
@@ -115,6 +133,7 @@ function schedule() {
                       onNewTime={(startTime, endTime, dayOfTheWeek) =>
                         addAvailability(startTime, endTime, dayOfTheWeek)
                       }
+                      availableTimes={availableTimes}
                     />
                   )}
                 ></FlatList>
@@ -135,6 +154,17 @@ function schedule() {
           </TouchableOpacity>
         )}
       </View>
+
+      <AddAvailabilityModal
+        visible={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={(startTime, endTime) => {
+          addAvailability(startTime, endTime, selectedDay);
+          setIsModalOpen(false);
+        }}
+        availableTimes={availableTimes}
+        dayOfTheWeek={selectedDay}
+      />
     </ScrollView>
   );
 }
@@ -160,7 +190,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   icon: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   notAvailable: {
     marginLeft: "auto",

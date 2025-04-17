@@ -1,4 +1,4 @@
-import { AvailableTime } from "@/app/types/schedule/AvailableTime";
+import { AvailableTime } from "@/types/schedule/AvailableTime";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useState } from "react";
@@ -20,6 +20,7 @@ interface DayAvailabilityProps {
   onDelete: () => void;
   onNewTime: (startTime: string, endTime: string, dayOfTheWeek: string) => void;
   dayOfTheWeek: string;
+  availableTimes: AvailableTime[];
 }
 
 function DayAvailability({
@@ -29,6 +30,7 @@ function DayAvailability({
   onDelete,
   onNewTime,
   dayOfTheWeek,
+  availableTimes,
 }: DayAvailabilityProps) {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme || "light"];
@@ -72,6 +74,8 @@ function DayAvailability({
                 onNewTime(startTime, endTime, dayOfTheWeek);
                 setIsModalOpen(false);
               }}
+              availableTimes={availableTimes}
+              dayOfTheWeek={dayOfTheWeek}
             />
           )}
         </>
