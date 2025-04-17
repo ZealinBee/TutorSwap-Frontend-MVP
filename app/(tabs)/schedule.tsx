@@ -35,12 +35,12 @@ function schedule() {
 
   const [availableTimes, setAvailableTimes] = useState([] as AvailableTime[]);
   const [tempAvailableTimes, setTempAvailableTimes] = useState(
-    [] as AvailableTime[]);
+    [] as AvailableTime[]
+  );
 
   const [groupedAvailability, setGroupedAvailability] = useState(
     [] as DayGroup[]
   );
-
 
   const removeAvailability = (timeslot: AvailableTime) => {
     const updatedAvailableTimes = tempAvailableTimes.filter((availableTime) => {
@@ -64,7 +64,6 @@ function schedule() {
       endTime,
     } as AvailableTime;
 
-
     tempAvailableTimes.push(newAvailability);
     setGroupedAvailability(groupAvailabilityByDayOfTheWeek(tempAvailableTimes));
   };
@@ -81,18 +80,40 @@ function schedule() {
   }, []);
 
   return (
-    <ScrollView style={{ backgroundColor: theme.background, flex: 1 }}>
+    <View style={{ backgroundColor: theme.background, flex: 1 }}>
       <View style={[{ backgroundColor: theme.background }, styles.container]}>
         <View style={styles.topContainer}>
-          <Text>Your Availability Schedule</Text>
-          <TouchableOpacity onPress={() => setEditMode(true)}>
-            <Text>Edit</Text>
+          <Text
+            style={[
+              styles.header,
+              {
+                color: theme.primary,
+              },
+            ]}
+          >
+            Your Availability Schedule
+          </Text>
+          <TouchableOpacity
+            onPress={() => setEditMode(true)}
+            style={[styles.editButton, { backgroundColor: theme.primary }]}
+          >
+            <Text style={{ color: theme.whiteAllAround, fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.availabilityContainer}>
           <FlatList
             data={groupedAvailability}
             keyExtractor={(item) => item.day}
+            ListFooterComponent={() => (
+              <View style={styles.noticeContainer}>
+                <Text>
+                  Invitees can schedule up to{" "}
+                  {mockReservationPreference.futureDays} days into the future
+                  with at least {mockReservationPreference.futureDays} hours
+                  notice{" "}
+                </Text>
+              </View>
+            )}
             renderItem={({ item }) => (
               <View style={styles.dayRow}>
                 <Text
@@ -147,26 +168,39 @@ function schedule() {
             )}
           ></FlatList>
         </View>
-        <View style={styles.noticeContainer}>
-          <Text>
-            Invitees can schedule up to {mockReservationPreference.futureDays}{" "}
-            days into the future with at least{" "}
-            {mockReservationPreference.futureDays} hours notice{" "}
-          </Text>
-        </View>
+
         {editMode && (
           <View style={styles.editButtonWrapper}>
-            <TouchableOpacity onPress={() => setEditMode(false)}>
-              <Text>Save</Text>
+            <TouchableOpacity
+              onPress={() => setEditMode(false)}
+              style={[
+                styles.saveAndCancelButton,
+                { backgroundColor: theme.secondary },
+              ]}
+            >
+              <Text
+                style={{
+                  color: theme.whiteAllAround,
+                  fontSize: 16,
+                }}
+              >
+                Save
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              setEditMode(false);
-              setTempAvailableTimes(availableTimes);
-              setGroupedAvailability(
-                groupAvailabilityByDayOfTheWeek(availableTimes)
-              );
-            }}>
-              <Text>Cancel</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setEditMode(false);
+                setTempAvailableTimes(availableTimes);
+                setGroupedAvailability(
+                  groupAvailabilityByDayOfTheWeek(availableTimes)
+                );
+              }}
+              style={[
+                styles.saveAndCancelButton,
+                { borderWidth: 1, borderColor: theme.danger },
+              ]}
+            >
+              <Text style={{ color: theme.danger, fontSize: 16 }}>Cancel</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -182,7 +216,7 @@ function schedule() {
         availableTimes={availableTimes}
         dayOfTheWeek={selectedDay}
       />
-    </ScrollView>
+    </View>
   );
 }
 
@@ -199,7 +233,8 @@ const styles = StyleSheet.create({
   },
 
   availabilityContainer: {
-    marginTop: 40,
+    marginTop: 20,
+    flex: 1,
   },
 
   notAvailableWrapper: {
@@ -232,11 +267,30 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: "flex-start",
   },
-  noticeContainer: {},
+  noticeContainer: {
+    marginTop: 20,
+  },
   editButtonWrapper: {
     flexDirection: "row",
-
-  }
+    marginTop: 20,
+  },
+  editButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  saveAndCancelButton: {
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginRight: 10,
+    width: 80,
+    alignItems: "center",
+  },
 });
 
 export default schedule;

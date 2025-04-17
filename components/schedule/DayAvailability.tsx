@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   useColorScheme,
   View,
-  ViewBase,
 } from "react-native";
 import AddAvailabilityModal from "./AddAvailabilityModal";
 
@@ -57,7 +56,7 @@ function DayAvailability({
               style={styles.timeInput}
             ></TextInput>
             <TouchableOpacity style={styles.icon} onPress={onDelete}>
-              <AntDesign name="delete" size={20} color={theme.text} />
+              <AntDesign name="delete" size={20} color={theme.danger} />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.icon}
