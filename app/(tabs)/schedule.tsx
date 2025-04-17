@@ -34,15 +34,19 @@ function schedule() {
   const [selectedDay, setSelectedDay] = useState("");
 
   const [availableTimes, setAvailableTimes] = useState([] as AvailableTime[]);
+  const [tempAvailableTimes, setTempAvailableTimes] = useState(
+    [] as AvailableTime[]);
+
   const [groupedAvailability, setGroupedAvailability] = useState(
     [] as DayGroup[]
   );
 
+
   const removeAvailability = (timeslot: AvailableTime) => {
-    const updatedAvailableTimes = availableTimes.filter((availableTime) => {
+    const updatedAvailableTimes = tempAvailableTimes.filter((availableTime) => {
       return availableTime.id !== timeslot.id;
     });
-    setAvailableTimes(updatedAvailableTimes);
+    setTempAvailableTimes(updatedAvailableTimes);
     setGroupedAvailability(
       groupAvailabilityByDayOfTheWeek(updatedAvailableTimes)
     );
@@ -60,13 +64,15 @@ function schedule() {
       endTime,
     } as AvailableTime;
 
-    availableTimes.push(newAvailability);
-    setGroupedAvailability(groupAvailabilityByDayOfTheWeek(availableTimes));
+
+    tempAvailableTimes.push(newAvailability);
+    setGroupedAvailability(groupAvailabilityByDayOfTheWeek(tempAvailableTimes));
   };
 
   useEffect(() => {
     const init = () => {
       setAvailableTimes(mockAvailableTimes);
+      setTempAvailableTimes(mockAvailableTimes);
       setGroupedAvailability(
         groupAvailabilityByDayOfTheWeek(mockAvailableTimes)
       );
@@ -149,9 +155,20 @@ function schedule() {
           </Text>
         </View>
         {editMode && (
-          <TouchableOpacity onPress={() => setEditMode(false)}>
-            <Text>Save</Text>
-          </TouchableOpacity>
+          <View style={styles.editButtonWrapper}>
+            <TouchableOpacity onPress={() => setEditMode(false)}>
+              <Text>Save</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              setEditMode(false);
+              setTempAvailableTimes(availableTimes);
+              setGroupedAvailability(
+                groupAvailabilityByDayOfTheWeek(availableTimes)
+              );
+            }}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
 
@@ -216,6 +233,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   noticeContainer: {},
+  editButtonWrapper: {
+    flexDirection: "row",
+
+  }
 });
 
 export default schedule;
