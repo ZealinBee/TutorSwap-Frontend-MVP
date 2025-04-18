@@ -9,15 +9,15 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-
-import mockAvailableTimes from "@/mocks/mockAvailableTimes";
-import DayAvailability from "@/components/schedule/DayAvailability";
-import mockReservationPreference from "@/mocks/mockReservationPreference";
 import { AntDesign } from "@expo/vector-icons";
 
 import { AvailableTime } from "../../types/schedule/AvailableTime";
 import groupAvailabilityByDayOfTheWeek from "@/utils/groupAvailabilityByDayOfTheWeek";
 import AddAvailabilityModal from "@/components/schedule/AddAvailabilityModal";
+import AvailabilityPreference from "@/components/schedule/AvailabilityPreference";
+import mockAvailableTimes from "@/mocks/mockAvailableTimes";
+import DayAvailability from "@/components/schedule/DayAvailability";
+import mockReservationPreference from "@/mocks/mockReservationPreference";
 
 interface DayGroup {
   day: string;
@@ -32,6 +32,12 @@ function schedule() {
   const [editMode, setEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
+  const [futureDays, setFutureDays] = useState(
+    mockReservationPreference.futureDays
+  );
+  const [minimumNoticeHours, setMinimumNoticeHours] = useState(
+    mockReservationPreference.minimumNoticeHours
+  );
 
   const [availableTimes, setAvailableTimes] = useState([] as AvailableTime[]);
   const [tempAvailableTimes, setTempAvailableTimes] = useState(
@@ -93,27 +99,21 @@ function schedule() {
           >
             Your Availability Schedule
           </Text>
-          <TouchableOpacity
-            onPress={() => setEditMode(true)}
-            style={[styles.editButton, { backgroundColor: theme.primary }]}
-          >
-            <Text style={{ color: theme.whiteAllAround, fontSize: 16 }}>Edit</Text>
-          </TouchableOpacity>
+          {!editMode && (
+            <TouchableOpacity
+              onPress={() => setEditMode(true)}
+              style={[styles.editButton, { backgroundColor: theme.primary }]}
+            >
+              <Text style={{ color: theme.whiteAllAround, fontSize: 16 }}>
+                Edit
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.availabilityContainer}>
           <FlatList
             data={groupedAvailability}
             keyExtractor={(item) => item.day}
-            ListFooterComponent={() => (
-              <View style={styles.noticeContainer}>
-                <Text>
-                  Invitees can schedule up to{" "}
-                  {mockReservationPreference.futureDays} days into the future
-                  with at least {mockReservationPreference.futureDays} hours
-                  notice{" "}
-                </Text>
-              </View>
-            )}
             renderItem={({ item }) => (
               <View style={styles.dayRow}>
                 <Text
@@ -167,6 +167,20 @@ function schedule() {
               </View>
             )}
           ></FlatList>
+          {editMode ? (
+            <AvailabilityPreference
+              futureDays={futureDays}
+              minimumNoticeHours={minimumNoticeHours}
+              setFutureDays={setFutureDays}
+              setMinimumNoticeHours={setMinimumNoticeHours}
+            />
+          ) : (
+            <Text>
+              Invitees can schedule up to {futureDays}{" "}
+              days into the future with at least{" "}
+              {minimumNoticeHours} hours notice
+            </Text>
+          )}
         </View>
 
         {editMode && (
@@ -267,9 +281,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: "flex-start",
   },
-  noticeContainer: {
-    marginTop: 20,
-  },
+
   editButtonWrapper: {
     flexDirection: "row",
     marginTop: 20,
@@ -280,7 +292,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   header: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 10,
   },

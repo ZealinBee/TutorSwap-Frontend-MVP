@@ -20,6 +20,7 @@ export const Colors = {
     textInverse: "#FAF9F6",
     whiteAllAround: "#FAF9F6",
     danger: "#B00020",
+    link: "#0000EE",
   },
   dark: {
     text: "#FAF9F6",
@@ -34,5 +35,6 @@ export const Colors = {
     textInverse: "#151718",
     whiteAllAround: "#FAF9F6",
     danger: "#CF6679",
+    link: "#0000EE",
   },
 };
